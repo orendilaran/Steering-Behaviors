@@ -15,6 +15,9 @@ public class Setup {
         carros.add(new StudentCarMouse(Color.BLUE, -100,-100));
         carros.add(new StudentCarSeek(Color.RED, 200, 300));
         carros.add(new StudentCarFlee(Color.GREEN, 100, 100));
+        carros.add(new StudentCarArrive(Color.ORANGE, -300, 200));
+        carros.add(new StudentCarWander(Color.CYAN, -200, -200));
+        carros.add(new StudentCar(Color.YELLOW, 0, 0));
         return carros;
     }
 }

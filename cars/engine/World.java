@@ -10,6 +10,7 @@ public final class World {
     private final Vector2 mousePos;   // absolute scene coords; may be null
     private final Vector2 clickPos;   // center-relative coords; may be null
     private final double secs;
+    private final boolean spacePressed;
 
     private final double width;
     private final double height;
@@ -19,6 +20,7 @@ public final class World {
                  List<Car> cars,
                  Vector2 mousePos,
                  Vector2 clickPos,
+                 boolean spacePressed,
                  double width,
                  double height) {
         this.current = current;
@@ -26,6 +28,7 @@ public final class World {
         this.mousePos = mousePos;
         this.clickPos = clickPos;
         this.secs = secs;
+        this.spacePressed = spacePressed;
         this.width = width;
         this.height = height;
     }
@@ -49,6 +52,9 @@ public final class World {
             .filter(c -> c != current)
             .filter(c -> distance(current, c) <= radius)
             .toList();
+    }
+    public boolean isSpacePressed() {
+        return spacePressed;
     }
 
     public double getSecs() {

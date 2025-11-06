@@ -1,44 +1,59 @@
 package cars.student;
 
-import cars.engine.Car;
+
 import cars.engine.Vector2;
 import cars.engine.World;
 
 import java.awt.*;
 
+
+import static cars.engine.Vector2.subtract;
+import static cars.engine.Vector2.normalize;
 import static cars.engine.Vector2.vec2;
 
-public class StudentCarMouse extends Car {
-    int state;
+
+// 1. MUDANÇA DA HERANÇA: Agora estende StudentCarBase
+public class StudentCarMouse extends StudentCarBase {
+    // A variável 'state' foi removida, pois não é necessária para um comportamento fixo.
+
     public StudentCarMouse(Color cor, double x, double y) {
         super(settings ->
-          settings
-            .color(cor)
-            .randomOrientation()
-            .position(x,y)
-
+                settings
+                        .color(cor)
+                        .randomOrientation()
+                        .position(x,y)
+                        .maxSpeed(200) // Velocidade moderada
+                        .maxForce(600) // Força aumentada para garantir que ele possa virar
         );
     }
 
     /**
-     * Deve calcular o steering behavior para esse carro
-     * O parametro world contem diversos metodos utilitários:
-     * world.getClickPos(): Retorna um vector2D com a posição do último click,
-     * ou nulo se nenhum click foi dado ainda
-     * - world.getMousePos(): Retorna um vector2D com a posição do cursor do mouse
-     * - world.getNeighbors(): Retorna os carros vizinhos. Não inclui o próprio carro.
-     * Opcionalmente, você pode passar o raio da vizinhança. Se o raio não for
-     * fornecido retornará os demais carros.
-     * - world.getSecs(): Indica quantos segundos transcorreram desde o último quadro
-     * Você ainda poderá chamar os seguintes metodos do carro para obter informações:
-     * - getDirection(): Retorna um vetor unitário com a direção do veículo
-     * - getPosition(): Retorna um vetor com a posição do carro
-     * - getMass(): Retorna a massa do carro
-     * - getMaxSpeed(): Retorna a velocidade de deslocamento maxima do carro em píxeis / s
-     * - getMaxForce(): Retorna a forca maxima que pode ser aplicada sobre o carro
+     * 2. MUDANÇA DO MÉTODO: Implementa o método calculateBehaviorForce.
+     * Contém APENAS a lógica de Busca (Seek) do Mouse.
      */
     @Override
-    public Vector2 calculateSteering(final World world) {
-        return world.getMousePos();
+    public Vector2 calculateBehaviorForce(final World world) {
+        final Vector2 targetPos = world.getMousePos();
+
+        if (targetPos == null) {
+            // Retorna vetor zero, o carro mantém o que estava fazendo
+            return vec2();
+        }
+
+        // Lógica de SEEK (Buscar)
+
+        // 1. Calcular o vetor do carro até o alvo (Direção de Busca)
+        Vector2 desiredVelocity = subtract(targetPos, getPosition());
+
+        // 2. Definir a Velocidade Desejada (Direção * Velocidade Máxima)
+        // Note: Seu código original não usava desiredSpeed no cálculo final, mas sim o maxSpeed.
+        // O método resize faz a mesma coisa: define o tamanho para maxSpeed.
+        desiredVelocity.resize(getMaxSpeed());
+
+        // 3. Calcular a Força de Direção (Steering Force)
+        // Força = Velocidade Desejada - Velocidade Atual
+
+        // Retorna a força bruta de Seek. O StudentCarBase fará a soma com Avoidance e o truncate.
+        return subtract(desiredVelocity, getVelocity());
     }
 }

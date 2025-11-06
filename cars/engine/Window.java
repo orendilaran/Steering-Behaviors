@@ -15,6 +15,7 @@ public final class Window extends JFrame implements Runnable {
     private Vector2 clickPos = null;
     private Vector2 mousePos = null;
     private boolean debugMode = true;
+    private boolean spacePressed = false;
 
     private Window() {
         super("Steering behaviors");
@@ -59,7 +60,23 @@ public final class Window extends JFrame implements Runnable {
                     debugMode = !debugMode;
                 }
             }
+
+            @Override // Captura quando a tecla é pressionada
+            public void keyPressed(KeyEvent e) {
+                // KeyEvent.VK_SPACE é a constante para a tecla Espaço
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spacePressed = true; // Liga a flag
+                }
+            }
+
+            @Override // Captura quando a tecla é solta
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spacePressed = false; // Desliga a flag
+                }
+            }
         });
+
         requestFocus();
         this.cars = new Setup().createCars();
     }
@@ -102,13 +119,13 @@ public final class Window extends JFrame implements Runnable {
 
     private void update(final double secs) {
         cars.forEach(car -> car.update(
-            new World(
-                    secs, car, cars,
-                    mousePos, clickPos,
-                    getWidth(), getHeight()
+                new World(
+                        secs, car, cars,
+                        mousePos, clickPos,
+                        spacePressed,
+                        getWidth(), getHeight()
                 )
-            )
-        );
+        ));
     }
 
     private void draw(Graphics2D g2d) {
