@@ -4,7 +4,7 @@ import cars.engine.Car;
 import cars.engine.Vector2;
 import cars.engine.World;
 
-// Importa a classe utilitária que calcula a força de desvio
+
 import static cars.student.SteeringUtils.calculateAvoidance;
 import static cars.engine.Vector2.multiply;
 import static cars.engine.Vector2.add;
@@ -14,18 +14,15 @@ import cars.engine.Settings;
 
 import java.util.function.Consumer;
 
-// 1. Classe Abstrata: Não pode ser instanciada diretamente, serve apenas como base.
+// Classe base para o comportamento dos carros
 public abstract class StudentCarBase extends Car {
 
-    // Construtor: Chama o construtor da classe Car
+    // Construtor da classe Car
     public StudentCarBase(Consumer<Settings> settings) {
         super(settings);
     }
 
-    /**
-     * As classes filhas (Seek, Arrive, Wander) devem implementar APENAS sua lógica de comportamento aqui.
-     * Deve retornar a força de comportamento SEM somar o Desvio e SEM aplicar o truncate (limitação de força).
-     */
+
     public abstract Vector2 calculateBehaviorForce(final World world);
 
 

@@ -58,11 +58,11 @@ public class StudentCar extends Car {
 
         Vector2 targetPos = world.getMousePos();
 
-        // Regra: Se o estado não for WANDER e não houver mouse, não aplica força.
+        // Se não houver mouse e não estiver em WANDER, retorna nulo
         if (targetPos == null && state != STATE_WANDER) {
             return null;
         }
-        // --- Execução do Comportamento Atual ---
+
         return switch (state) {
             case STATE_SEEK -> calculateSeek(targetPos);
             case STATE_FLEE -> calculateFlee(targetPos);
@@ -73,7 +73,7 @@ public class StudentCar extends Car {
     }
 // --- MÉTODOS DE COMPORTAMENTO ---
 
-    // 0. Comportamento SEEK (Busca)
+    // SEEK
     private Vector2 calculateSeek(Vector2 targetPos) {
         Vector2 desiredVelocity = subtract(targetPos, getPosition());
         desiredVelocity.resize(getMaxSpeed());
@@ -82,7 +82,7 @@ public class StudentCar extends Car {
         return truncate(steeringForce, getMaxForce());
     }
 
-    // 1. Comportamento FLEE (Fuga)
+    //FLEE
     private Vector2 calculateFlee(Vector2 targetPos) {
         Vector2 desiredVelocity = subtract(getPosition(), targetPos); // Inverte para fugir
         desiredVelocity.resize(getMaxSpeed());

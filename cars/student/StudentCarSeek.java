@@ -1,20 +1,18 @@
 package cars.student;
 
-// Não precisamos mais importar Car, pois StudentCarBase já o faz
+
 import cars.engine.Vector2;
 import cars.engine.World;
 import cars.engine.Car;
 
 import java.awt.*;
-import java.util.List; // Necessário para getNeighbors()
+import java.util.List;
 
-// Importamos todos os métodos estáticos do Vector2
 import static cars.engine.Vector2.*;
 
 
-// 1. MUDANÇA DA HERANÇA: Agora estende StudentCarBase
 public class StudentCarSeek extends StudentCarBase {
-    // A variável 'state' não é necessária se o carro só faz um comportamento
+
 
     public StudentCarSeek(Color cor, double x, double y) {
         super(settings ->
@@ -27,10 +25,7 @@ public class StudentCarSeek extends StudentCarBase {
         );
     }
 
-    /**
-     * 2. MUDANÇA DO MÉTODO: Implementa o método calculateBehaviorForce.
-     * Este método contém APENAS a lógica de Busca (Seek) do alvo.
-     */
+        // calculo do Seek
     @Override
     public Vector2 calculateBehaviorForce(final World world) {
 
@@ -40,25 +35,18 @@ public class StudentCarSeek extends StudentCarBase {
             return vec2();
         }
 
-        // Definir o alvo como a posição do último vizinho
-        // NOTA: Para um Seek efetivo, você deve buscar o mouse ou um ponto fixo,
-        // buscar um vizinho fará ele "perseguir" o último na lista.
+     // Pega o Vector2 do ultimo carro na lista e pega a posição
         final Vector2 targetPos = neighbors.getLast().getPosition();
-
-        // Lógica de SEEK (Buscar)
-
-        // 1. Calcular o vetor do carro até o alvo (Direção de Busca)
+        // Posição alvo (carro amarelo) - posição do atual = direção do vetor
         Vector2 desiredVelocity = subtract(targetPos, getPosition());
 
-        // 2. Definir a Velocidade Desejada (Direção * Velocidade Máxima)
+        // resize ajusta o vetor para o tamanho maxSpeed
         desiredVelocity.resize(getMaxSpeed());
 
-        // 3. Calcular a Força de Direção (Steering Force)
-        // Força = Velocidade Desejada - Velocidade Atual
 
-        // Retorna a força bruta de Seek. O StudentCarBase se encarrega da soma com Avoidance e do truncate.
+        // Força de direção = flexa amarela (desiredVelocity) - (Velocidade atual) seta azul (que tá no car)
         return subtract(desiredVelocity, getVelocity());
     }
 
-    // O bloco de Javadoc que estava no final foi removido, pois era desnecessário e causava erro.
+
 }

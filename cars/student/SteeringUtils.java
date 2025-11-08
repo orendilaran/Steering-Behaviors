@@ -4,10 +4,10 @@ import cars.engine.Car;
 import cars.engine.Vector2;
 import cars.engine.World;
 
-// Importação necessária para a lista de vizinhos
+// lista de vizinhos
 import java.util.List;
 
-// Para facilitar a leitura e o uso dos métodos estáticos de Vector2
+
 import static cars.engine.Vector2.vec2;
 import static cars.engine.Vector2.subtract;
 import static cars.engine.Vector2.normalize;
@@ -16,12 +16,11 @@ import static cars.engine.Vector2.truncate;
 
 
 public final class SteeringUtils {
-    // --- Configurações do Desvio de Colisão ---
+    // --- Esse código evita que os carros colidam entre si ---
+
     // Raio de detecção: Distância máxima para começar a desviar
     private static final int AVOIDANCE_RADIUS = 75;
-
     // Fator de Repulsão: Intensidade da força de afastamento.
-    // Usamos um valor alto pois a repulsão é inversamente proporcional à distância ao quadrado.
     private static final double REPULSION_FACTOR = 5000.0;
 
     /**
