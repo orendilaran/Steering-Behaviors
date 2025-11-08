@@ -16,6 +16,7 @@ import static cars.engine.Vector2.multiply;
 import static cars.engine.Vector2.add;
 import static cars.engine.Vector2.byAngle;
 import static java.lang.Math.toRadians;
+//Aqui tinha o básico que a professora passou, mas aí modificamos para fazer o carro AMARELO
 
 public class StudentCar extends Car {
     //ESTADOS do carro amarelo que muda ao apertar ESPAÇO
