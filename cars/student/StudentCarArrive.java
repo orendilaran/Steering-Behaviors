@@ -20,14 +20,11 @@ public class StudentCarArrive extends StudentCarBase {
                         .color(cor)
                         .randomOrientation()
                         .position(x, y)
-                        .maxSpeed(400)
+                        .maxSpeed(500)
         );
     }
 
-    /**
-     * Implementa APENAS a lógica do Arrive, conforme exigido por StudentCarBase.
-     * Deve retornar a força bruta de comportamento (sem truncate).
-     */
+
     @Override
     public Vector2 calculateBehaviorForce(final World world) {
         final Vector2 targetPos = world.getMousePos();
@@ -42,7 +39,7 @@ public class StudentCarArrive extends StudentCarBase {
         // Lógica de desaceleração (Arrive)
         double desiredSpeed;
         if (distance <= DECELERATION_RADIUS) {
-            desiredSpeed = getMaxSpeed() * (distance / DECELERATION_RADIUS);
+            desiredSpeed = getMaxSpeed() * (distance /(3* DECELERATION_RADIUS));
         } else {
             desiredSpeed = getMaxSpeed();
         }

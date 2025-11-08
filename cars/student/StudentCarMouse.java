@@ -22,8 +22,8 @@ public class StudentCarMouse extends StudentCarBase {
                         .color(cor)
                         .randomOrientation()
                         .position(x,y)
-                        .maxSpeed(200) // Velocidade moderada
-                        .maxForce(600) // Força aumentada para garantir que ele possa virar
+                        .maxSpeed(100) // Velocidade moderada
+                        .maxForce(200) // Força aumentada para garantir que ele possa virar
         );
     }
 

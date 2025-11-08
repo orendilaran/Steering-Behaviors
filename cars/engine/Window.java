@@ -20,7 +20,7 @@ public final class Window extends JFrame implements Runnable {
     private Vector2 mousePos = null;
     private boolean debugMode = true;
     private boolean spacePressed = false;
-
+    private BufferedImage carparkImage;
 
     private Window() {
         super("Steering behaviors");
@@ -36,6 +36,23 @@ public final class Window extends JFrame implements Runnable {
                 start();
             }
         });
+
+        // ---CARREGA A IMAGEM APENAS UMA VEZ ---
+        try {
+            BufferedImage originalImage = ImageIO.read(new File("Estacionamento.png"));
+
+
+            this.carparkImage = new BufferedImage(INITIAL_WIDTH, INITIAL_HEIGHT, originalImage.getType());
+            Graphics2D g = this.carparkImage.createGraphics();
+
+
+            g.drawImage(originalImage, 0, 0, INITIAL_WIDTH, INITIAL_HEIGHT, null);
+            g.dispose();
+
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar a imagem de fundo: " + e.getMessage());
+        }
+        // ---------------------------------------
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -100,6 +117,7 @@ public final class Window extends JFrame implements Runnable {
     @Override
     public void run() {
         double prev = System.currentTimeMillis() - 1;
+
         try {
             final var strategy = getBufferStrategy();
             while (true) {
@@ -142,23 +160,25 @@ public final class Window extends JFrame implements Runnable {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         // le imagem
-        BufferedImage myImage = null;
-        try {
-            myImage = ImageIO.read(new File("Estacionamento.jpg"));
-            // Or .jpg, .gif, etc.
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("ih");
-            // Handle the exception, e.g., display an error message or use a placeholder image
-        }
-        // Clear
-        if (myImage != null) {
-            // Draw image at (x, y) with its original size
-            g2d.drawImage(myImage, 0, 0, this);
 
-            // Or, draw image at (x, y) with a specified width and height
-            // g2d.drawImage(myImage, x, y, width, height, this);
+        if (this.carparkImage != null) {
+            // Desenha a imagem para cobrir toda a janela (para resolver o scaling lento)
+            g2d.drawImage(
+                    this.carparkImage,
+                    0, 0,
+                    getWidth(),
+                    getHeight(),
+                    null // ImageObserver (usar null é mais rápido aqui)
+            );
+        } else {
+
+            g2d.setBackground(new Color(220, 220, 220));
+            g2d.clearRect(0, 0, getWidth(), getHeight());
+
+
         }
+        // Or, draw image at (x, y) with a specified width and height
+        // g2d.drawImage(myImage, x, y, width, height, this);
         //g2d.setBackground(new Color(220, 220, 220));
         //g2d.clearRect(0, 0, getWidth(), getHeight());
 

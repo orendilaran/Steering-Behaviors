@@ -9,7 +9,7 @@ import static cars.engine.Vector2.subtract;
 import static cars.engine.Vector2.vec2;
 import static cars.engine.Vector2.*;
 
-// Agora estende StudentCarBase
+
 public class StudentCarFlee extends StudentCarBase {
 
 
@@ -47,17 +47,13 @@ public class StudentCarFlee extends StudentCarBase {
             return vec2();
         }
 
-        // 3. Lógica do Flee (Fuga) - SÓ EXECUTADA SE ESTIVER DENTRO DO RAIO
-
-        // Vetor de Desejo: aponta do mouse PARA o carro (getPosition - targetPos)
-        // Usamos o displacement invertido (o vetor de subtração já foi calculado acima, então podemos reutilizar, mas é mais limpo recalcular a direção)
+        // Lógica de FUGA (Flee) Sò funciona dentro do PANIC_RADIUS
         Vector2 desiredVelocity = subtract(getPosition(), targetPos);
 
         // Define a Velocidade Desejada (Direção * Velocidade Máxima)
         desiredVelocity.resize(getMaxSpeed());
 
-        // Retorna a Força de Fuga bruta.
-        // O StudentCarBase adiciona o Avoidance e aplica o limite final de força.
+        // Flexa amarela (desiredVelocity) - Seta azul (Velocidade atual)
         return subtract(desiredVelocity, getVelocity());
     }
 }
