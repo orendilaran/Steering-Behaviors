@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public final class Window extends JFrame implements Runnable {
     public static final int INITIAL_WIDTH = 1024;
@@ -16,6 +20,7 @@ public final class Window extends JFrame implements Runnable {
     private Vector2 mousePos = null;
     private boolean debugMode = true;
     private boolean spacePressed = false;
+
 
     private Window() {
         super("Steering behaviors");
@@ -136,9 +141,26 @@ public final class Window extends JFrame implements Runnable {
         g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
+        // le imagem
+        BufferedImage myImage = null;
+        try {
+            myImage = ImageIO.read(new File("Estacionamento.jpg"));
+            // Or .jpg, .gif, etc.
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("ih");
+            // Handle the exception, e.g., display an error message or use a placeholder image
+        }
         // Clear
-        g2d.setBackground(new Color(220, 220, 220));
-        g2d.clearRect(0, 0, getWidth(), getHeight());
+        if (myImage != null) {
+            // Draw image at (x, y) with its original size
+            g2d.drawImage(myImage, 0, 0, this);
+
+            // Or, draw image at (x, y) with a specified width and height
+            // g2d.drawImage(myImage, x, y, width, height, this);
+        }
+        //g2d.setBackground(new Color(220, 220, 220));
+        //g2d.clearRect(0, 0, getWidth(), getHeight());
 
         // Center the world origin
         g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
@@ -147,6 +169,7 @@ public final class Window extends JFrame implements Runnable {
         if (clickPos != null) {
             g2d.setColor(Color.GRAY);
             g2d.fillOval((int) clickPos.x - 4, (int) clickPos.y - 4, 8, 8);
+            //System.out.println(clickPos.x +"|"+ clickPos.y);
         }
 
         // Draw cars

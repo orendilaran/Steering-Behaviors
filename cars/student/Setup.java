@@ -17,7 +17,7 @@ public class Setup {
         carros.add(new StudentCarFlee(Color.GREEN, 100, 100));
         carros.add(new StudentCarArrive(Color.ORANGE, -300, 200));
         carros.add(new StudentCarWander(Color.CYAN, -200, -200));
-        carros.add(new StudentCar(new Color(128, 0, 128), 150, 150)); //CarroROxo
+        carros.add(new StudentCarFollowPath(new Color(128, 0, 128), 150, 150)); //CarroROxo
         carros.add(new StudentCar(Color.YELLOW, 0, 0));
 
         return carros;
