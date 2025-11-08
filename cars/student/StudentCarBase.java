@@ -14,7 +14,7 @@ import cars.engine.Settings;
 
 import java.util.function.Consumer;
 
-// Classe base para o comportamento dos carros
+// Classe base para o comportamento dos carros - todos os carros possuem desvio de colisão e truncate.
 public abstract class StudentCarBase extends Car {
 
     // Construtor da classe Car
@@ -29,22 +29,20 @@ public abstract class StudentCarBase extends Car {
     @Override
     public final Vector2 calculateSteering(final World world) {
 
-        // 1. Calcular a Força de Comportamento (O que o carro QUER fazer)
-        Vector2 behaviorForce = calculateBehaviorForce(world);
+        // Para evitar erros
+        Vector2 behaviorForce = calculateBehaviorForce(world); //pega um comportamento da classe filha
         if (behaviorForce == null) {
             behaviorForce = Vector2.vec2(); // Força zero se o comportamento não retornar nada
         }
 
-        // 2. Calcular a Força de Desvio (O que o carro DEVE fazer para NÃO BATER)
-        // Passamos 'this' (a referência ao carro atual) para o método utilitário.
+        //Pega o avoidanceForce que está na Classe SteeringUtils aqui confesso que não entendi o que acontece, é magica.
         Vector2 avoidanceForce = calculateAvoidance(this, world);
 
-        // 3. Somar as Forças: Combina o que o carro quer com o Desvio
         // Damos PRIORIDADE ao Desvio multiplicando-o por 2.0. Isso garante que o carro vire para evitar a colisão.
         Vector2 prioritizedAvoidance = multiply(avoidanceForce, 2.0);
         Vector2 finalForce = add(behaviorForce, prioritizedAvoidance);
 
-        // 4. Truncar (limitar) o resultado final da soma pela força máxima do carro.
+        // o truncate garante que a força total não exceda o máximo permitida (que a gente escolhe na classe)
         return truncate(finalForce, getMaxForce());
     }
 }

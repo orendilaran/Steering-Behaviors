@@ -56,17 +56,19 @@ public class StudentCarWander extends StudentCarBase {
         Vector2 displacement = byAngle(wanderAngle);
         displacement.multiply(WANDER_CIRCLE_RADIUS);
 
-        // 4. Calcula a posição final do alvo
+        // Calcula a posição final do alvo (para onde ele vai)
         Vector2 wanderTarget = add(getPosition(), circleCenter, displacement);
 
-        // Calcula a Força de Seek (Busca) para o alvo de Wander ( a seta amarela)
+        // A força que vai carregar o carrinho até o alvo final calculado ali em cima /\
         Vector2 desiredVelocity = subtract(wanderTarget, getPosition());
+
         // resize ajusta o vetor para o tamanho maxSpeed;
         desiredVelocity.resize(getMaxSpeed());
 
+        // enfim a seta amarela, o resultado de todas da força calculada alí em cima - Velocity da classe CAR
         Vector2 steeringForce = subtract(desiredVelocity, getVelocity());
 
-        // Retorna a força bruta de Wander. O StudentCarBase se encarrega da soma com Avoidance e do truncate.
+        // O StudentCarBase se encarrega da soma com Avoidance e do truncate.
         return steeringForce;
     }
 }
