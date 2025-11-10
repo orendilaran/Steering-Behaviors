@@ -45,4 +45,5 @@ public abstract class StudentCarBase extends Car {
         // o truncate garante que a força total não exceda o máximo permitida (que a gente escolhe na classe)
         return truncate(finalForce, getMaxForce());
     }
+
 }

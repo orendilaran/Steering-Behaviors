@@ -189,7 +189,7 @@ public final class Window extends JFrame implements Runnable {
         if (clickPos != null) {
             g2d.setColor(Color.GRAY);
             g2d.fillOval((int) clickPos.x - 4, (int) clickPos.y - 4, 8, 8);
-            //System.out.println(clickPos.x +"|"+ clickPos.y);
+            System.out.println(clickPos.x +"|"+ clickPos.y);
         }
 
         // Draw cars

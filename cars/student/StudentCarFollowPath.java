@@ -45,7 +45,7 @@ public class StudentCarFollowPath extends Car {
     @Override
     public Vector2 calculateSteering(final World world) {
         // Este if verifica se o carro chegou no alvo
-        if ((this.getPosition().x >= Path[i].x-1 &&  this.getPosition().x <= Path[i].x+1)&& (this.getPosition().y >= Path[i].y -1 && this.getPosition().y <= Path[i].y+1)){
+        if ((this.getPosition().x >= Path[i].x-2 &&  this.getPosition().x <= Path[i].x+2)&& (this.getPosition().y >= Path[i].y -2 && this.getPosition().y <= Path[i].y+2)){
             i++; // progressao na lista
         if (i >= Path.length) {i = 0;}} // verifica se chegou no final ta lista e reseta para o começo.
 
